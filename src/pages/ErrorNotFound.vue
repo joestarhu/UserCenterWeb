@@ -1,13 +1,17 @@
 <template>
   <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
     <div>
-      <div style="font-size: 30vh">
+      <!-- <div style="font-size: 30vh">
         404
-      </div>
+      </div> -->
 
       <div class="text-h2" style="opacity:.4">
         Oops. Nothing here...
       </div>
+
+
+      <q-img src="https://cdn.pixabay.com/photo/2021/07/21/12/49/error-6482984_960_720.png">
+      </q-img>
 
       <q-btn
         class="q-mt-xl"

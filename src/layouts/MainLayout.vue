@@ -1,116 +1,73 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh Lpr lFf">
+    <q-header :class="Dark.isActive?'bg-dark':'dm-bg-light'" bordered>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer"/>
 
         <q-toolbar-title>
-          Quasar App
+          {{$t("msgAppNameUC")}}
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <dmLanguage/>
+        <dmAppearance/>
+        <dmAvatar/>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered :class="Dark.isActive?'bg-dark':'dm-bg-light'">
+      <q-list> 
+        <dmMenu v-for="link in essentialLinks" :key="link.label" v-bind="link" />
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
+      <q-ajax-bar color="primary" size="0.5rem" position="bottom"></q-ajax-bar>
     </q-page-container>
   </q-layout>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+<script setup lang="js">
+import { Dark} from "quasar";
+import { ref } from 'vue'
+import dmAppearance from "src/components/dmAppearance.vue";
+import dmLanguage from "src/components/dmLanguage.vue";
+import dmMenu from 'src/components/dmMenu.vue';
+import dmAvatar from "src/components/dmAvatar.vue";
 
-const linksList = [
+const leftDrawerOpen = ref(false)
+
+const essentialLinks = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    label:"msgLogin",
+    to:"/",
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    label:"msgAccount",
+    icon:"school",
+    children:[
+      {
+        label:"msgLogin",
+        to:"/login"
+      },
+      {
+        label:"msgPassword",
+        to:"/login"
+      },
+    ]
   },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
 ]
 
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
+function toggleLeftDrawer () {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
 </script>
+
+<style lang="scss" scoped>
+.dm-bg-light{
+  background-color: #FFF;
+  color: #34373C;
+}
+
+
+</style>
