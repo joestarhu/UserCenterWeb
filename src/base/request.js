@@ -1,7 +1,7 @@
 import { api } from "src/boot/axios";
 
 
-async function http_req(url, data, callbackFn, callbackErrFn, ctrl, method) {
+async function httpReq(url, data, callbackFn, callbackErrFn, ctrl, method) {
     let rsp = null;
 
     if (ctrl) {
@@ -21,7 +21,7 @@ async function http_req(url, data, callbackFn, callbackErrFn, ctrl, method) {
     } catch (err) {
         // 异常内容待实现
         if (callbackErrFn) {
-            callbackErrFn(rsp)
+            callbackErrFn(err.response)
         }
     }
 
@@ -30,15 +30,52 @@ async function http_req(url, data, callbackFn, callbackErrFn, ctrl, method) {
     }
 }
 
-
-
-async function api_post(url, data, callbackFn, callbackErrFn, ctrl) {
-    await http_req(url, data, callbackFn, callbackErrFn, ctrl, "post")
+async function apiPost(url, data, callbackFn, callbackErrFn, ctrl) {
+    await httpReq(url, data, callbackFn, callbackErrFn, ctrl, "post")
 }
 
-async function api_get(url, data, callbackFn, callbackErrFn, ctrl) {
-    await http_req(url, data, callbackFn, callbackErrFn, ctrl, "get")
+async function apiGet(url, data, callbackFn, callbackErrFn, ctrl) {
+    await httpReq(url, data, callbackFn, callbackErrFn, ctrl, "get")
 }
 
 
-export { api_post, api_get }
+function getTblList(pagination, tbl, url, data, callbackFn = null, callbackErrFn = null) {
+    if (!tbl.pagination) {
+        tbl.pagination = pagination
+    }
+
+    data = { ...data, page_idx: pagination.page, page_size: pagination.rowsPerPage }
+
+    apiGet(url, data,
+        (rsp) => {
+            let rspData = rsp.data;
+            if (rspData.code == 0) {
+                // 空数据用"-"来代替
+                rspData.data.records.map(obj => {
+                    Object.keys(obj).forEach(key => {
+                        if (obj[key] === "") {
+                            obj[key] = "-";
+                        }
+                    })
+                })
+                tbl.rows = rspData.data.records;
+                pagination.rowsNumber = rspData.data.pagination.total;
+            }
+
+            if (callbackFn) {
+                callbackErrFn(rspData)
+            }
+        },
+        (err) => {
+            if (callbackErrFn) {
+                callbackErrFn(err)
+            }
+        },
+        tbl
+    )
+}
+
+
+
+
+export { apiPost, apiGet, getTblList }

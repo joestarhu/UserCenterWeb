@@ -5,7 +5,7 @@ import CryptoJS from "crypto-js";
 import { Base64 } from "js-base64";
 import { ConfigDict } from "./settings";
 
-function encrypt_string(value) {
+function encryptString(value) {
     let sk = "0f35268f93594811b1fb81e772a9e256";
     let key = CryptoJS.enc.Utf8.parse(sk);
     let srcs = CryptoJS.enc.Utf8.parse(value);
@@ -20,7 +20,7 @@ function encrypt_string(value) {
     return encrypted.toString()
 }
 
-function get_jwt_payload(token = null) {
+function getJwtPayload(token = null) {
     let payload = null;
     let jwt = token || localStorage.getItem(ConfigDict.jwt);
 
@@ -31,4 +31,4 @@ function get_jwt_payload(token = null) {
 }
 
 
-export { encrypt_string, get_jwt_payload }
+export { encryptString, getJwtPayload }

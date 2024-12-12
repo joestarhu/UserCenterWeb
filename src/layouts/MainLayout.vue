@@ -1,12 +1,12 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf">
     <q-header :class="Dark.isActive?'bg-dark':'dm-bg-light'" bordered>
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer"/>
 
-        <q-toolbar-title>
-          {{$t("msgAppNameUC")}}
-        </q-toolbar-title>
+        <!-- <q-toolbar-title>
+        </q-toolbar-title> -->
+        <q-space></q-space>
 
         <dmLanguage/>
         <dmAppearance/>
@@ -16,13 +16,17 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered :class="Dark.isActive?'bg-dark':'dm-bg-light'">
       <q-list> 
+        <q-item>
+          <q-item-section side><img src="/public/icons/favicon-32x32.png"></q-item-section>
+          <q-item-section class="text-h5 text-bold">{{$t("msgAppNameUC")}}</q-item-section>
+        </q-item>
         <dmMenu v-for="link in essentialLinks" :key="link.label" v-bind="link" />
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
-      <q-ajax-bar color="primary" size="0.5rem" position="bottom"></q-ajax-bar>
+      <q-ajax-bar color="primary" size="0.2rem" position="bottom"></q-ajax-bar>
     </q-page-container>
   </q-layout>
 </template>
@@ -36,26 +40,11 @@ import dmMenu from 'src/components/dmMenu.vue';
 import dmAvatar from "src/components/dmAvatar.vue";
 
 const leftDrawerOpen = ref(false)
-
 const essentialLinks = [
-  {
-    label:"msgLogin",
-    to:"/",
-  },
-  {
-    label:"msgAccount",
-    icon:"school",
-    children:[
-      {
-        label:"msgLogin",
-        to:"/login"
-      },
-      {
-        label:"msgPassword",
-        to:"/login"
-      },
-    ]
-  },
+  {label:"msgMenuAccount", icon:"person", to:"/account",},
+  {label:"msgMenuOrg", icon:"corporate_fare",to:"/org"},
+  {label:"msgMenuRole", icon:"contact_emergency", to:"/role",},
+  {label:"msgMenuApp", icon:"widgets",to:"/app"},
 ]
 
 function toggleLeftDrawer () {
@@ -63,11 +52,13 @@ function toggleLeftDrawer () {
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 .dm-bg-light{
   background-color: #FFF;
   color: #34373C;
 }
 
-
+.body--light{
+  background-color: #f7f7f7;
+}
 </style>

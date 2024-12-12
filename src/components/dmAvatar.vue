@@ -1,5 +1,6 @@
 <template>
-<q-avatar color="indigo" class="avatar">
+<q-avatar class="cursor-pointer">
+  <img src="/public/icons/favicon-128x128.png" style="width:2rem; height:2rem" />
   <q-popup-proxy transition-show="jump-down" transition-hide="jump-up">
       <q-list flat dense bordered>
         <q-item clickable v-ripple @click="logout">
@@ -13,7 +14,6 @@
 </q-avatar>
 </template>
 
-
 <script setup lang="js">
 import { ConfigDict } from 'src/base/settings';
 import { useRouter } from 'vue-router';
@@ -24,15 +24,4 @@ function logout(){
   localStorage.removeItem(ConfigDict.jwt);
   router.push("/login");
 }
-
-
-
 </script>
-
-<style lang="css" scoped>
-.avatar {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-}
-</style>

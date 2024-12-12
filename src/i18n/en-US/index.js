@@ -6,6 +6,15 @@ export default {
   msgPassword: "Password",
   msgLogin: "Login",
   msgLogout: "Logout",
+  msgNoData: "No data",
+  msgRecordPerPage: "Record per page",
+  msgCreate: "New",
+  msgUpdate: "Edit",
+  msgDelete: "Delete",
+  msgRequired: "Required",
+  msgAction: "Action",
+  msgCreatedAt: "Created at",
+  msgUpdatedAt: "Updated at",
 
   // Appearance
   msgModeAuto: "Auto",
@@ -14,4 +23,15 @@ export default {
 
 
   msgAppNameUC: "Unified User Center",
+  msgNickname: "Nickname",
+  msgPhone: "Phone",
+  msgStatus: "Status",
+  msgStatusEnable: "Enable",
+  msgStatusDisable: "Disable",
+
+  // 菜单
+  msgMenuAccount: "Account",
+  msgMenuOrg: "Organization",
+  msgMenuRole: "Role",
+  msgMenuApp: "Application",
 }

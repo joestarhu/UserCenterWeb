@@ -1,7 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
-import { get_jwt_payload } from 'src/base/security';
+import { getJwtPayload } from 'src/base/security';
 
 /*
  * If not building with SSR mode, you can
@@ -28,7 +28,7 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
-    let payload = get_jwt_payload()
+    let payload = getJwtPayload()
     if (payload != null) {
       to.path === "/login" ? next("/") : next()
     } else {

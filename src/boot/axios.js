@@ -13,9 +13,10 @@ const api = axios.create({
   timeout: 10000,
 })
 
+// 请求拦截器
 api.interceptors.request.use(
   config => {
-    config.headers.Authorization = "Bearer" + localStorage.getItem(ConfigDict.jwt);
+    config.headers.Authorization = "Bearer " + localStorage.getItem(ConfigDict.jwt);
     return config;
   },
   err => {
