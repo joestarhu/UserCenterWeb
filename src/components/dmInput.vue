@@ -30,14 +30,11 @@
         </q-item>
     </template>
 </q-select>
-
-
-
 </template>
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-import { computed,ref,watch,watchEffect } from 'vue';
+import { ref,watch,watchEffect } from 'vue';
 import { ConfigDict } from 'src/base/settings';
 
 const {t} = useI18n();
@@ -54,22 +51,27 @@ const dmLabel = props.i18nLabel ? t(props.i18nLabel) : props.qProps.label
 const innerValue = ref(props.modelValue)
 
 
-watch(innerValue,newValue=>{
-    emit("update:modelValue", newValue);
-});
-
-watchEffect(()=>{
-    innerValue.value = props.modelValue;
-});
-
-
-
 function optionsi18nLabel(opt){
     if(opt.i18nLabel){
         opt.label = t(opt.i18nLabel)
     }
     return opt.label
 }
+
+watch(innerValue,newValue=>{
+    emit("update:modelValue", newValue);
+});
+
+watchEffect(()=>{
+    if(props.qProps.options){
+        for(let opt of props.qProps.options){
+            optionsi18nLabel(opt)
+        }
+    }    
+    innerValue.value = props.modelValue;
+});
+
+
 
 
 </script>

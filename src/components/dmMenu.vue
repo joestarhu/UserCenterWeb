@@ -1,12 +1,10 @@
 <template>
-    <q-expansion-item class="overflow-hidden" active-class="dm-menu-active"
-    :icon="icon"  :label="$t(label)" :to="to" hide-expand-icon>
-        <!-- <q-list>
-            <q-expansion-item class="overflow-hidden dm-menu" active-class="dm-menu-active"
-            v-for="obj of children" :key="obj" :label="$t(obj.label)" :to="obj.to" hide-expand-icon :header-inset-level="1"/>
-        </q-list> -->
-    </q-expansion-item>
-
+<q-expansion-item class="overflow-hidden" active-class="dm-menu-active" :icon="icon"  :label="$t(label)" :to="to" :hide-expand-icon="!children">
+    <q-list>
+        <q-expansion-item class="overflow-hidden dm-menu" active-class="dm-menu-active"
+        v-for="obj of children" :key="obj" :label="$t(obj.label)" :to="obj.to" hide-expand-icon :header-inset-level="1"/>
+    </q-list>
+</q-expansion-item>
 </template>
 
 <script setup lang="js">
@@ -20,11 +18,7 @@ let props = defineProps({
         // 子菜单
         children: { type: Object, default: null },    
 })
-
-
-
 </script>
-
 
 <style>
 .dm-menu{

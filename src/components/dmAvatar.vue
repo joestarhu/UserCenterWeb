@@ -1,6 +1,6 @@
 <template>
 <q-avatar class="cursor-pointer">
-  <img src="/public/icons/favicon-128x128.png" style="width:2rem; height:2rem" />
+  <img src="/icons/favicon-128x128.png" style="width:2rem; height:2rem" />
   <q-popup-proxy transition-show="jump-down" transition-hide="jump-up">
       <q-list flat dense bordered>
         <q-item clickable v-ripple @click="logout">

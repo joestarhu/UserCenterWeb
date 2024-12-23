@@ -1,4 +1,5 @@
 <template>
+
 <q-table 
     v-bind="props" 
     v-model:pagination="pagination"
@@ -12,14 +13,24 @@
     >
     <!-- 读取状态 -->
     <template v-slot:loading>
-        <q-inner-loading showing color="primary"/>
+        <q-inner-loading showing color="primary" />
+        <!-- <q-tr class="row q-ma-md">
+            <q-th v-for="n in 5" :key="n" class="col">
+                <q-skeleton animation="blink" type="rect" class="full-width"/>
+            </q-th>
+        </q-tr>
+        <q-tr v-for="n in 10" :key="n" class="row q-ma-md">
+            <q-td v-for="n in 5" :key="n" class="col">
+                <q-skeleton animation="blink" type="rect" class="full-width"/>
+            </q-td>
+        </q-tr> -->
     </template>
 
     <!-- 无数据 -->
     <template v-slot:no-data>
         <div class="full-width row flex-center q-gutter-sm text-bold">
-            <q-icon size="2rem" name="info" />
-            <span>{{ $t("msgNoData") }}</span>
+            <q-icon size="2rem" name="info" color="accent"/>
+            <span>{{ $t(dmNoDataLabel) }}</span>
         </div>
     </template>
 
@@ -57,7 +68,7 @@
     <!--特殊行操作栏:button -->
     <template #body-cell-btns="props">
         <q-td :props="props" class="q-gutter-xs">
-            <q-btn v-for="obj in dmRowBtn" :key="obj" :color="obj.color" :icon="obj.icon" dense @click="btnClick(obj.id,props)">
+            <q-btn flat v-for="obj in dmRowBtn" :key="obj" :icon="obj.icon" :color="obj.color" dense @click="btnClick(obj.id,props)">
                 <q-tooltip>
                     {{ $t(obj.label) }}
                 </q-tooltip>
@@ -86,6 +97,7 @@ const props = defineProps({
     dmRowBtn:{default:[]},
     dmHeaderBtn:{default:[]},
     dmHeaderInput:{default:[]},
+    dmNoDataLabel:{default:"msgNoData"},
 })
 const pagination = reactive({page:1, rowsNumber:0, rowsPerPage:10});
 
