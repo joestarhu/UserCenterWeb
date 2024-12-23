@@ -17,8 +17,8 @@
     </template>
   </dmManager>
 
-  <q-dialog persistent v-model="createPnl.show">
-    <dmForm class="q-pa-md" title="msgPnlAccountCreate" :btnLoading="createPnl.loading" :formData="formData" @submit="btnClick"></dmForm>
+  <q-dialog persistent v-model="formPnl.show">
+    <dmForm class="q-pa-md" title="msgPnlAccountCreate" :btnLoading="formPnl.loading" :formData="formData" @submit="btnClick"></dmForm>
   </q-dialog>
 
 </q-page>
@@ -29,7 +29,7 @@
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { reactive,computed, watchEffect } from "vue";
+import { reactive,computed} from "vue";
 import { DMTBL,DMBTN,DMINPUT, msgOK,msgNG,msgErrLabel,showOptLabel,showOptColor,detailHandle,detailShow,detailID } from "src/base/settings";
 import { apiPost, getTblList} from "src/base/request";
 import { ModelBase,ModelAccount } from "src/base/model";
@@ -48,6 +48,11 @@ const detailPnl = reactive({
   id:computed(()=>{return detailID(router)}),
 })
 
+const formPnl = reactive({
+  show:false,
+  loading:false,
+})
+
 const formData = reactive({
     account:DMINPUT.textRequired({rules: [val => val && val.toString().length > 0 || t("msgRequired")]}, ModelAccount.account.i18nLabel,""),
     nickname:DMINPUT.textRequired({rules: [val => val && val.toString().length > 0 || t("msgRequired")]},ModelAccount.nickname.i18nLabel,""),
@@ -55,10 +60,6 @@ const formData = reactive({
     user_status:DMINPUT.select({...ModelAccount.user_status},ModelAccount.user_status.i18nLabel,0),  
 })
 
-const createPnl = reactive({
-  show:false,
-  loading:false,
-})
 
 const tbl = reactive({
     dmHeaderInput:{
@@ -117,7 +118,7 @@ function createData(formData){
     (rsp)=>{
       if(rsp.data.code == 0){
         msgOK(q,{message:t("msgSucceed")})
-        createPnl.show=false;
+        formPnl.show=false;
         getList(tbl.pagination);
       }else{
         let errmsg = msgErrLabel(rsp.data.code)
@@ -127,7 +128,7 @@ function createData(formData){
     (err)=>{
       // 异常处理
     },
-    createPnl,
+    formPnl,
   )
 }
 
@@ -143,7 +144,7 @@ function btnClick(btnID,data=null){
       break;
     case DMBTN.create.id:
       initFormData()
-      createPnl.show=true
+      formPnl.show=true
       break;
     case DMBTN.submit.id:
       createData(data)

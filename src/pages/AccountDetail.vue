@@ -1,5 +1,5 @@
 <template>
-<q-card flat style="border-radius: 10px;" bordered>
+<q-card flat style="border-radius: 10px;" bordered v-if="!noDataFlag">
     <q-card-section>
         <div class="row items-center">
             <span class="text-bold">{{$t("msgPnlGeneralInfo")}}</span>
@@ -72,10 +72,12 @@
     </q-card-section>
 </q-card>
 
-<!-- <q-dialog v-model="editPnl.show" persistent>    
-    <AccountBasic title="msgPnlAccountUpdate"></AccountBasic>
-</q-dialog> -->
-
+<q-card flat style="border-radius: 10px;" bordered v-if="noDataFlag">
+    <q-card-section>
+        <q-icon size="2rem" name="info" color="accent"/>
+        <span>{{ $t("msgNoData") }}</span>
+    </q-card-section>
+</q-card>
 
 <q-dialog persistent v-model="formPnl.show">
     <dmDangerDelete v-if="formPnl.title==='msgPnlAccountDelete'" @submit="btnClick" :confirmMessage="detail.account" :title="formPnl.title" :btnLoading="formPnl.loading">
@@ -88,9 +90,8 @@
 
 <script setup lang="js">
 import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { onMounted,watchEffect,reactive,ref } from "vue";
+import { watchEffect,reactive,ref } from "vue";
 import { DMTBL,DMBTN,DMINPUT, msgOK,msgNG,msgErrLabel,showOptLabel,showOptColor,detailHandle } from "src/base/settings";
 import { apiGet,apiPost} from "src/base/request";
 import { ModelBase,ModelAccount } from "src/base/model";
@@ -104,6 +105,7 @@ const props = defineProps({
 })
 const q = useQuasar();
 const {t} = useI18n();
+const noDataFlag=ref(false);
 
 const loading = ref(true)
 const detail = ref({
@@ -146,8 +148,10 @@ function getDetail(){
                 if(rsp.data.data){
                     // 有数据,数据更新
                     detail.value=rsp.data.data
+                    noDataFlag.value=false
                 }else{
                     // 无数据,无数据显示
+                    noDataFlag.value=true
                 }
             }else{
                 // 异常情况
@@ -210,8 +214,6 @@ function updateData(){
         formPnl,
     )
 }
-
-
 
 
 function btnClick(btnID,data=null){
