@@ -15,6 +15,22 @@ export default {
   msgAction: "Action",
   msgCreatedAt: "Created at",
   msgUpdatedAt: "Updated at",
+  msgPermissionDenied: "Permission Denied",
+  msgBack: "Back",
+  msgDetail: "Detail",
+  msgSubmit: "Submit",
+  msgCancel: "Cancel",
+  msgAvatar: "Avatar",
+  msgSucceed: "Succeed",
+  msgUndefined: "Undefined",
+  msgResetPassword: "Reset password",
+  msgDeleteWarning: "Once you delete data, there is no going back. Please be certain",
+  msgPleaseInput: "Please input ",
+  msgContinueOperation: " to continue the operation",
+
+
+
+
 
   // Appearance
   msgModeAuto: "Auto",
@@ -28,10 +44,43 @@ export default {
   msgStatus: "Status",
   msgStatusEnable: "Enable",
   msgStatusDisable: "Disable",
+  msgOrgName: "Organization name",
+  msgOrgOwner: "Organization owner",
+  msgRoleName: "Role name",
+  msgRoleDesc: "Role description",
+  msgAppName: "Application name",
+  msgAppDesc: "Application description",
+
 
   // 菜单
+  msgMenuOrgApp: "Organization application",
+  msgMenuPlatformManager: "Platform management",
   msgMenuAccount: "Account",
   msgMenuOrg: "Organization",
   msgMenuRole: "Role",
   msgMenuApp: "Application",
+  msgMenuOrgUser: "Organization user",
+  msgMenuOrgRole: "Organization role",
+  msgMenuOrgApp: "Organization application",
+
+
+  // 界面
+  msgPnlGeneralInfo: "General information",
+  msgPnlDangerZone: "Danger zone",
+  msgPnlAccountCreate: "Create account",
+  msgPnlAccountUpdate: "Edit account",
+  msgPnlAccountDelete: "Delete account",
+
+
+  msgPnlAppList: "Applications",
+  msgPnlAppBasicInfo: "Application info",
+  msgPnlAppPermission: "Application permission",
+  msgPnlAppRole: "Application role",
+
+  // 异常
+  msgErrCode_1: "Wrong account or password",
+  msgErrCode_2: "Account is disable",
+  msgErrCode_3: "Cannot operate superadmin account",
+  msgErrCode_4: "Account already existed",
+  msgErrCode_5: "Phone already existed",
 }
