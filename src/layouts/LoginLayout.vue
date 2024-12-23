@@ -11,10 +11,10 @@
                 <dmAppearance/>
             </div>
 
-            <q-card class="row-inline dm-login-panel">
+            <q-card bordered class="row-inline dm-login-panel">
+                <p class="q-pt-md text-h5 text-center text-weight-800">WELCOME</p>
                 <q-form @submit.prevent="login">
-                    <q-card-section class="q-pa-md q-gutter-md">
-                        <p class="text-h5 text-center text-weight">WELCOME</p>
+                    <q-card-section class="q-pa-md q-ma-md q-gutter-md">
                         <q-input v-bind="passwordLogin.account" v-model.trim="passwordLogin.account.value">
                             <template #prepend><q-icon name="person"></q-icon></template>
                             <template #label>{{ $t(passwordLogin.account.label) }}</template>
@@ -24,7 +24,7 @@
                             <template #label>{{ $t(passwordLogin.password.label) }}</template>
                         </q-input>
                     </q-card-section>
-                    <q-card-actions>
+                    <q-card-actions class="q-ma-md">
                         <q-btn class="full-width" v-bind="passwordLogin.login">{{$t("msgLogin")}}</q-btn>                        
                     </q-card-actions>
                 </q-form>
@@ -47,13 +47,13 @@ import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import {reactive,computed} from "vue";
-import { ConfigDict,msgNG } from "src/base/settings";
+import { ConfigDict,msgNG,msgErrLabel} from "src/base/settings";
 import { encryptString } from "src/base/security";
 import { apiPost } from "src/base/request";
 import dmAppearance from "src/components/dmAppearance.vue";
 import dmLanguage from "src/components/dmLanguage.vue";
 
-const $q = useQuasar();
+const q = useQuasar();
 const {t} = useI18n();
 const router= useRouter();
 
@@ -71,7 +71,8 @@ function login_success(rsp){
         localStorage.setItem(ConfigDict.jwt,rsp.data.data);
         router.push("/")
     }else{
-        $q.notify(msgNG({message:t("msgPassword")}));
+        let errmsg = msgErrLabel(rsp.data.code)
+        msgNG(q,{message:t(errmsg)})
     }
 }
 

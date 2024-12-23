@@ -9,6 +9,9 @@ const routes = [
       { path: '/org', component: () => import('pages/OrgManager.vue') },
       { path: '/role', component: () => import('pages/RoleManager.vue') },
       { path: '/app', component: () => import('pages/AppManager.vue') },
+      { path: '/org_user', component: () => import('pages/OrgUserManager.vue') },
+      { path: '/org_app', component: () => import('pages/OrgAppManager.vue') },
+      { path: '/org_role', component: () => import('pages/OrgRoleManager.vue') },
     ]
   },
   {
