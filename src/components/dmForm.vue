@@ -17,6 +17,7 @@
                     :i18nLabel="obj.i18nLabel"
                     :dmType="obj.dmType"
                     :dmAppend="obj.dmAppend"
+                    @filter="(val, update, abort) => obj.filterFn(val, update, abort, obj.qProps)"
                     v-model="obj.value">
                 </dmInput>
             </slot>

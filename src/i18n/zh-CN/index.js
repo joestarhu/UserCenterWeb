@@ -64,6 +64,7 @@ export default {
     msgPnlDangerZone: "危险区域",
 
 
+    msgPnlAccountList: "账号列表",
     msgPnlAccountCreate: "新增账号",
     msgPnlAccountUpdate: "编辑账号",
     msgPnlAccountDelete: "删除账号",

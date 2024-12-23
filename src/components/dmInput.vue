@@ -30,6 +30,24 @@
         </q-item>
     </template>
 </q-select>
+
+
+<!-- 有筛选功能的选择框:selectFilter -->
+ <q-select v-if="dmType=='selectFilter'" v-bind="qProps" v-model.trim="innerValue" :label="i18nLabel?$t(i18nLabel):dmLabel" @filter="filterFn" emit-value map-options use-input>
+    <template #no-option>
+        <q-item>
+            <q-item-section class="text-grey">{{ $t("msgNoData") }}</q-item-section>
+        </q-item>
+    </template>
+    <template #option="scope">
+        <q-item v-bind="scope.itemProps">
+            <q-item-section>
+                <q-item-label>{{ optionsi18nLabel(scope.opt) }}</q-item-label>
+                <q-item-label caption>{{ scope.opt.caption }}</q-item-label>
+            </q-item-section>
+        </q-item>
+    </template>
+ </q-select>
 </template>
 
 <script setup>
@@ -50,6 +68,10 @@ const props = defineProps({
 const dmLabel = props.i18nLabel ? t(props.i18nLabel) : props.qProps.label 
 const innerValue = ref(props.modelValue)
 
+
+function filterFn(val, update, abort){
+    emit("filter", val, update, abort);
+}
 
 function optionsi18nLabel(opt){
     if(opt.i18nLabel){

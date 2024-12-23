@@ -1,6 +1,6 @@
 <template>
 <q-page padding>
-  <dmManager :showDetail="detailPnl.show" @click="btnClick">
+  <dmManager title="msgPnlAccountList" :showDetail="detailPnl.show" @click="btnClick">
     <template #list>
       <dmTbl v-bind="tbl" @query="getList" @btnClick="btnClick">
         <template #body-cell-user_status="props">

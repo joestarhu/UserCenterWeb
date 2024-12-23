@@ -67,6 +67,7 @@ export default {
   // 界面
   msgPnlGeneralInfo: "General information",
   msgPnlDangerZone: "Danger zone",
+  msgPnlAccountList: "Account list",
   msgPnlAccountCreate: "Create account",
   msgPnlAccountUpdate: "Edit account",
   msgPnlAccountDelete: "Delete account",

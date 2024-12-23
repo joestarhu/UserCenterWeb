@@ -1,6 +1,6 @@
 <template>
 <q-page padding>
-    <dmTbl v-bind="tbl" @query="getList">
+    <dmTbl v-bind="tbl" @query="getList" @btnClick="btnClick">
         <template #body-cell-org_status="props">
         <q-td :props="props">
           <q-badge :color="showOptColor(props.row.org_status,ModelOrg.org_status.options)">
@@ -10,18 +10,25 @@
       </template>
     </dmTbl>
 </q-page>
+
+<q-dialog persistent v-model="formPnl.show">
+  <dmForm :formData="formData"></dmForm>
+</q-dialog>
 </template>
 
 
 <script setup lang="js">
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 import { reactive } from "vue";
 import { DMTBL,DMBTN,DMINPUT, msgOK,msgNG,showOptLabel,showOptColor} from "src/base/settings";
 import { getTblList} from "src/base/request";
 import { ModelBase,ModelAccount,ModelOrg } from "src/base/model";
 import dmTbl from "src/components/dmTbl.vue";
+import dmForm from "src/components/dmForm.vue";
 
-const $q = useQuasar();
+const q = useQuasar();
+const {t} = useI18n();
 
 const tbl = reactive({
     dmHeaderInput:{
@@ -41,6 +48,33 @@ const tbl = reactive({
     rows:[],
 })
 
+const formPnl = reactive({
+  show:false,
+  loading:false,
+})
+
+const formData = reactive({
+  // 组织owner
+  org_name:DMINPUT.textRequired({rules: [val => val && val.toString().length > 0 || t("msgRequired")]},ModelOrg.org_name.i18nLabel),
+  org_owner:DMINPUT.selectFilter({rules: [val => val && val.toString().length > 0 || t("msgRequired")]},filter,ModelOrg.org_owner.i18nLabel),
+  org_status:DMINPUT.select({...ModelOrg.org_status},ModelOrg.org_status.i18nLabel)
+})
+
+
+function initForm(){
+  formData.org_name.value=""
+  formData.org_owner.value=""
+  formData.org_status.value = 0
+}
+
+function filter(val,update,abort,tag){
+    update(()=>{
+      formData.org_owner.qProps.options = [
+            { label: "用户名", value: 0, caption:"你好呀|世界"},
+            { label: "msgStatusDisable", value: 1,caption:"Hello|World"},
+        ]
+    })
+}
 
 
 function getList(pagination){
@@ -54,8 +88,23 @@ function getList(pagination){
     pagination,tbl,"/org/list",data,
     null,
     (err)=>{
-      $q.notify(msgNG({message:err.data.detail}))
+      msgNG(q,{message:err.data.detail})
     }
   )
 }
+
+
+
+function btnClick(btnID,data=null){
+  switch(btnID){
+    case DMBTN.create.id:
+      initForm()
+      formPnl.show=true
+      break;
+    default:
+      break;
+  }
+}
+
+
 </script>
