@@ -19,8 +19,8 @@ api.interceptors.request.use(
     config.headers.Authorization = "Bearer " + localStorage.getItem(ConfigDict.jwt);
     return config;
   },
-  err => {
-    return Promise.reject(err);
+  error => {
+    return Promise.reject(error)
   }
 )
 

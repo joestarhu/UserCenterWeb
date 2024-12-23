@@ -1,6 +1,5 @@
 // 全局定义
 import { reactive } from 'vue';
-import i18n from "src/i18n";
 
 const ConfigDict = {
     // jwt
@@ -27,19 +26,67 @@ const DMBTN = {
     create: { id: 0, label: "msgCreate", color: "primary", icon: "add" },
     update: { id: 1, label: "msgUpdate", color: "primary", icon: "edit" },
     delete: { id: 2, label: "msgDelete", color: "primary", icon: "delete" },
+    back: { id: 3, label: "msgBack", color: "primary", icon: "arrow_back" },
+    detail: { id: 4, label: "msgDetail", color: "primary", icon: "feed" },
+    submit: { id: 5, label: "msgSubmit", color: "primary", icon: "check" },
 }
 
 
-function showOptLabel(value, opts) {
+// 控件:dmManager的detail处理函数
+function detailHandle(router, id = null) {
+    const query = { ...router.currentRoute.value.query }
+    if (id == null) {
+        delete query.id
+    } else {
+        query.id = id
+    }
+
+    router.replace({
+        query: query
+    })
+}
+
+function detailShow(router) {
+    return router.currentRoute.value.query.id ? true : false
+}
+
+function detailID(router) {
+    return router.currentRoute.value.query.id ? router.currentRoute.value.query.id : ""
+}
+
+
+// 控件 options的取值
+function getOpt(value, opts) {
     for (let obj of opts) {
         if (obj.value === value) {
-            return obj.i18nLabel || obj.label;
+            return obj
         }
     }
-    return ""
+    return null
 }
 
+// 控件 options的取值,color
+function showOptColor(value, opts) {
+    let obj = getOpt(value, opts)
+    if (obj) {
+        return obj.color
+    } else {
+        return null
+    }
+}
 
+// 控件 options的取值,label
+function showOptLabel(value, opts) {
+    let obj = getOpt(value, opts)
+
+    if (obj) {
+        return obj.i18nLabel || obj.label;
+    } else {
+        return ""
+    }
+}
+
+// 控件:表格列函数
 function setTblCol(field, i18nLabel, options = null, name = null, align = "left") {
     let format = (val) => { return val };
     if (!name) {
@@ -61,7 +108,7 @@ const DMTBL = {
 const DMINPUT = {
     // 普通输入
     text: (qProps, i18nLabel = null, value = null) => {
-        let params = { outlined: true, "lazy-rules": true, hint: "", dense: true, ...qProps }
+        let params = { outlined: true, "lazy-rules": true, hint: "", clearable: true, dense: true, ...qProps }
         return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "text" })
     },
     // 必需输入
@@ -71,43 +118,56 @@ const DMINPUT = {
     },
     // 查询输入
     textQuery: (qProps, i18nLabel = null, value = null) => {
-        let params = { debounce: ConfigDict.debounce, dense: true, outlined: true, clearable: true, style: ConfigDict.dmInputStyle, ...qProps }
+        let params = { outlined: true, debounce: ConfigDict.debounce, clearable: true, style: ConfigDict.dmInputStyle, dense: true, ...qProps }
         return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "text", dmAppend: ConfigDict.dmInputAppendQuery })
+    },
+
+    // 选择输入
+    select: (qProps, i18nLabel = null, value = null) => {
+        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
+        return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "select" })
     },
 
     // 选择查询
     selectQuery: (qProps, i18nLabel = null, value = null) => {
-        let params = { dense: true, clearable: true, style: ConfigDict.dmInputStyle, outlined: true, ...qProps }
+        let params = { outlined: true, clearable: true, style: ConfigDict.dmInputStyle, dense: true, ...qProps }
         return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "select" })
     },
+
+
 
 }
 
 // 消息通知相关
 const MSG_BASE_OPTS = { timeout: 3000, position: "top", progress: true };
-const MSG_OK_OPTS = { ...MSG_BASE_OPTS, type: "positive" };
+const MSG_OK_OPTS = { ...MSG_BASE_OPTS, type: "positive", timeout: 1000 };
 const MSG_NG_OPTS = { ...MSG_BASE_OPTS, type: "negative" };
 const MSG_INFO_OPTS = { ...MSG_BASE_OPTS, type: "info" };
 
-function msgOK(opts) {
-    return { ...MSG_OK_OPTS, ...opts };
+
+function msgErrLabel(errcode) {
+    return "msgErrCode_" + errcode
 }
 
-function msgNG(opts) {
-    return { ...MSG_NG_OPTS, ...opts };
+function msgOK(quasar, opts) {
+    let obj = { ...MSG_OK_OPTS, ...opts }
+    quasar.notify(obj)
 }
 
-function msgInfo(opts) {
-    return { ...MSG_INFO_OPTS, ...opts };
+function msgNG(quasar, opts) {
+    let obj = { ...MSG_NG_OPTS, ...opts };
+    quasar.notify(obj)
+}
+
+function msgInfo(quasar, opts) {
+    let obj = { ...MSG_INFO_OPTS, ...opts };
+    quasar.notify(obj)
 }
 
 
-
-
-
-
-
-
-
-
-export { ConfigDict, DMBTN, DMTBL, DMINPUT, showOptLabel, msgOK, msgNG, msgInfo }
+export {
+    ConfigDict, DMBTN, DMTBL, DMINPUT,
+    getOpt, showOptColor, showOptLabel,
+    msgOK, msgNG, msgInfo, msgErrLabel,
+    detailHandle, detailShow, detailID
+}

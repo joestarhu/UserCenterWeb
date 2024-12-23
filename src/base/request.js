@@ -19,9 +19,20 @@ async function httpReq(url, data, callbackFn, callbackErrFn, ctrl, method) {
             callbackFn(rsp)
         }
     } catch (err) {
-        // 异常内容待实现
-        if (callbackErrFn) {
-            callbackErrFn(err.response)
+        console.log(err)
+        // 异常情况,发出请求,有返回
+        if (err.response) {
+            // 异常内容待实现
+            if (callbackErrFn) {
+                callbackErrFn(err.response)
+            }
+        } else if (err.request) {
+            // 请求发出,无返回
+            console.log(err.request)
+            console.log(err.code)
+        } else {
+            // 请求未发出
+            console.log("Request Not Success")
         }
     }
 
@@ -60,6 +71,7 @@ function getTblList(pagination, tbl, url, data, callbackFn = null, callbackErrFn
                 })
                 tbl.rows = rspData.data.records;
                 pagination.rowsNumber = rspData.data.pagination.total;
+                tbl.dmNoDataLabel = "msgNoData"
             }
 
             if (callbackFn) {
@@ -67,8 +79,15 @@ function getTblList(pagination, tbl, url, data, callbackFn = null, callbackErrFn
             }
         },
         (err) => {
-            if (callbackErrFn) {
-                callbackErrFn(err)
+            switch (err.status) {
+                case 403:
+                    tbl.dmNoDataLabel = "msgPermissionDenied"
+                    break;
+                default:
+                    if (callbackErrFn) {
+                        callbackErrFn(err)
+                    }
+                    break;
             }
         },
         tbl
