@@ -1,4 +1,16 @@
 import { api } from "src/boot/axios";
+// import { getCurrentInstance } from 'vue'
+import { ConfigDict } from "./settings";
+
+// function useGlobalPropery(){
+//     const internalInstance = getCurrentInstance()
+//     if(internalInstance){
+//         return internalInstance.appContext.config.globalProperties
+//     }else{
+//         console.warn('Vue instance not found. Make sure this function is called within a Vue component or after the app has been mounted.');
+//         return null
+//     }
+// }
 
 
 async function httpReq(url, data, callbackFn, callbackErrFn, ctrl, method) {
@@ -25,9 +37,12 @@ async function httpReq(url, data, callbackFn, callbackErrFn, ctrl, method) {
             callbackFn(rsp)
         }
     } catch (err) {
-        console.log(err)
         // 异常情况,发出请求,有返回
         if (err.response) {
+            if(err.response.status == 401){
+                localStorage.removeItem(ConfigDict.jwt)
+            }
+
             // 异常内容待实现
             if (callbackErrFn) {
                 callbackErrFn(err.response)

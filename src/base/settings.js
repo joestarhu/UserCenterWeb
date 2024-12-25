@@ -1,5 +1,6 @@
 // 全局定义
 import { reactive } from 'vue';
+import { Notify } from "quasar";
 
 const ConfigDict = {
     // jwt
@@ -156,19 +157,19 @@ function msgErrLabel(errcode) {
     return "msgErrCode_" + errcode
 }
 
-function msgOK(quasar, opts) {
+function msgOK(opts) {
     let obj = { ...MSG_OK_OPTS, ...opts }
-    quasar.notify(obj)
+    Notify.create(obj)
 }
 
-function msgNG(quasar, opts) {
+function msgNG(opts) {
     let obj = { ...MSG_NG_OPTS, ...opts };
-    quasar.notify(obj)
+    Notify.create(obj)
 }
 
-function msgInfo(quasar, opts) {
+function msgInfo(opts) {
     let obj = { ...MSG_INFO_OPTS, ...opts };
-    quasar.notify(obj)
+    Notify.create(obj)
 }
 
 

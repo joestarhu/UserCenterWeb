@@ -26,7 +26,6 @@
 
 
 <script setup lang="js">
-import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { reactive,computed} from "vue";
@@ -38,8 +37,6 @@ import dmTbl from "src/components/dmTbl.vue";
 import dmManager from "src/components/dmManager.vue"
 import AccountDetail from "./AccountDetail.vue";
 
-
-const q = useQuasar();
 const {t} = useI18n();
 const router = useRouter();
 
@@ -93,7 +90,7 @@ function getList(pagination){
     pagination,tbl,"/account/list",data,
     null,
     (err)=>{
-      msgNG(q, {message:err.data.detail})
+      msgNG({message:err.data.detail})
     }
   )
 }
@@ -117,12 +114,12 @@ function createData(formData){
   apiPost("/account/create",data,
     (rsp)=>{
       if(rsp.data.code == 0){
-        msgOK(q,{message:t("msgSucceed")})
+        msgOK({message:t("msgSucceed")})
         formPnl.show=false;
         getList(tbl.pagination);
       }else{
         let errmsg = msgErrLabel(rsp.data.code)
-        msgNG(q,{message:t(errmsg)})
+        msgNG({message:t(errmsg)})
       }
     },
     (err)=>{

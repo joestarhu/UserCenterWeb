@@ -43,7 +43,6 @@
 </template>
 
 <script setup lang="js">
-import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import {reactive,computed} from "vue";
@@ -53,7 +52,6 @@ import { apiPost } from "src/base/request";
 import dmAppearance from "src/components/dmAppearance.vue";
 import dmLanguage from "src/components/dmLanguage.vue";
 
-const q = useQuasar();
 const {t} = useI18n();
 const router= useRouter();
 
@@ -72,7 +70,7 @@ function login_success(rsp){
         router.push("/")
     }else{
         let errmsg = msgErrLabel(rsp.data.code)
-        msgNG(q,{message:t(errmsg)})
+        msgNG({message:t(errmsg)})
     }
 }
 

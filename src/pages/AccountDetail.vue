@@ -89,7 +89,6 @@
 </template>
 
 <script setup lang="js">
-import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { watchEffect,reactive,ref } from "vue";
 import { DMTBL,DMBTN,DMINPUT, msgOK,msgNG,msgErrLabel,showOptLabel,showOptColor,detailHandle } from "src/base/settings";
@@ -103,7 +102,7 @@ const emit = defineEmits(["close","btnClick"])
 const props = defineProps({
     user_uuid:{type:String,Required:true}
 })
-const q = useQuasar();
+
 const {t} = useI18n();
 const noDataFlag=ref(false);
 
@@ -156,7 +155,7 @@ function getDetail(){
             }else{
                 // 异常情况
                 let errmsg = msgErrLabel(rsp.data.code)
-                msgNG(q,{message:t(errmsg)})
+                msgNG({message:t(errmsg)})
             }
             loading.value=false
         },
@@ -176,11 +175,11 @@ function deleteData(){
                 (rsp)=>{
                     if(rsp.data.code==0){
                         formPnl.show=false
-                        msgOK(q,{message:t("msgSucceed")})
+                        msgOK({message:t("msgSucceed")})
                         emit("btnClick",DMBTN.back.id)
                     }else{
                         let errmsg = msgErrLabel(rsp.data.code)
-                        msgNG(q,{message:t(errmsg)})
+                        msgNG({message:t(errmsg)})
                     }
                 },
                 (err)=>{
@@ -201,11 +200,11 @@ function updateData(){
         (rsp)=>{
             if(rsp.data.code == 0){
                 formPnl.show=false
-                msgOK(q,{message:t("msgSucceed")})
+                msgOK({message:t("msgSucceed")})
                 getDetail()
             }else{
                 let errmsg = msgErrLabel(rsp.data.code)
-                msgNG(q,{message:t(errmsg)})
+                msgNG({message:t(errmsg)})
             }
         },
         (err)=>{

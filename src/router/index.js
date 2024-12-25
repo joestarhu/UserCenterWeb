@@ -1,7 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
-import routes from './routes'
 import { getJwtPayload } from 'src/base/security';
+import routes from './routes'
 
 /*
  * If not building with SSR mode, you can
