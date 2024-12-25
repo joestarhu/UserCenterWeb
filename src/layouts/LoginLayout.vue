@@ -92,13 +92,14 @@ function login(){
 </script>
 
 
-<style scoped>
+
+<style>
 .dm-login-panel{
     border-radius: 0.5rem;
     width: 25rem;
 }
 
 .body--light{
-    background-color: #f7f7f7;
+    background-color: #F5F7FA;
 }
 </style>

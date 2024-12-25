@@ -70,6 +70,6 @@ function toggleLeftDrawer () {
 }
 
 .body--light{
-  background-color: #f7f7f7;
+  background-color: #F5F7FA;
 }
 </style>
