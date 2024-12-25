@@ -9,10 +9,16 @@ async function httpReq(url, data, callbackFn, callbackErrFn, ctrl, method) {
     }
 
     try {
-        if (method === "get") {
-            rsp = await api.get(url, { params: data });
-        } else {
-            rsp = await api.post(url, data);
+        switch(method){
+            case "get":
+                rsp = await api.get(url, { params: data });
+                break;
+            case "post":
+                rsp = await api.post(url, data);
+                break;
+            default:
+                // 未实现Http请求的方法
+                break;
         }
 
         if (callbackFn) {
