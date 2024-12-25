@@ -1,5 +1,5 @@
 <template>
-<q-expansion-item class="overflow-hidden" active-class="dm-menu-active" :icon="icon"  :label="$t(label)" :to="to" :hide-expand-icon="!children">
+<q-expansion-item class="overflow-hidden q-mx-md q-my-xs dm-menu" active-class="dm-menu-active" :icon="icon"  :label="$t(label)" :to="to" :hide-expand-icon="!children">
     <q-list>
         <q-expansion-item class="overflow-hidden dm-menu" active-class="dm-menu-active"
         v-for="obj of children" :key="obj" :label="$t(obj.label)" :to="obj.to" hide-expand-icon :header-inset-level="1"/>
@@ -22,19 +22,19 @@ let props = defineProps({
 
 <style>
 .dm-menu{
-    border-radius: 0px 0px 0px 0px;
+    border-radius: 10px 10px 10px 10px;
 }
 
 .dm-menu:hover{
     background-image:linear-gradient(-90deg,#8D91FF 20%, #666DFF 50%);
-    border-radius: 1px;
+    border-radius: 10px;
     color: #FFF;
     font-weight: 800;
 }
 
 .dm-menu-active {
     background-image:linear-gradient(-90deg,#8D91FF 20%, #666DFF 100%);
-    border-radius: 1px;
+    border-radius: 10px;
     color: #FFF;
     font-weight: 800;
 } 
