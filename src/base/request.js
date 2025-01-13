@@ -21,7 +21,7 @@ async function httpReq(url, data, callbackFn, callbackErrFn, ctrl, method) {
     }
 
     try {
-        switch(method){
+        switch (method) {
             case "get":
                 rsp = await api.get(url, { params: data });
                 break;
@@ -39,7 +39,7 @@ async function httpReq(url, data, callbackFn, callbackErrFn, ctrl, method) {
     } catch (err) {
         // 异常情况,发出请求,有返回
         if (err.response) {
-            if(err.response.status == 401){
+            if (err.response.status == 401) {
                 localStorage.removeItem(ConfigDict.jwt)
             }
 

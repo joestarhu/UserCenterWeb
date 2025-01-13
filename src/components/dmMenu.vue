@@ -25,15 +25,16 @@ let props = defineProps({
     border-radius: 10px 10px 10px 10px;
 }
 
-.dm-menu:hover{
+/* .dm-menu:hover{
     background-image:linear-gradient(-90deg,#8D91FF 20%, #666DFF 50%);
     border-radius: 10px;
     color: #FFF;
     font-weight: 800;
-}
+} */
 
 .dm-menu-active {
-    background-image:linear-gradient(-90deg,#8D91FF 20%, #666DFF 100%);
+    /* background-image:linear-gradient(-90deg,#0267EF 20%, #0267EA 100%); */
+    background-color: #0267ea;
     border-radius: 10px;
     color: #FFF;
     font-weight: 800;

@@ -28,10 +28,13 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
+    // 获取jwt的payload
     let payload = getJwtPayload()
-    if (payload != null) {
+
+    if (payload && payload["org_uuid"]) {
       to.path === "/login" ? next("/") : next()
     } else {
+      // 无有效的登录信息
       to.path === "/login" ? next() : next("/login")
     }
   })

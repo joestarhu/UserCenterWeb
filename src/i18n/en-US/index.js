@@ -72,6 +72,11 @@ export default {
   msgPnlAccountUpdate: "Edit account",
   msgPnlAccountDelete: "Delete account",
 
+  msgPnlRoleList: "Role list",
+  msgPnlRoleCreate: "Create role",
+  msgPnlRoleUpdate: "Edit role",
+  msgPnlRoleDelete: "Delete role",
+
 
   msgPnlAppList: "Applications",
   msgPnlAppBasicInfo: "Application info",
@@ -84,4 +89,5 @@ export default {
   msgErrCode_3: "Cannot operate superadmin account",
   msgErrCode_4: "Account already existed",
   msgErrCode_5: "Phone already existed",
+  msgErrCode_6: "Role name already existed",
 }

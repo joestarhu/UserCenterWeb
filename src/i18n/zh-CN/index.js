@@ -69,6 +69,11 @@ export default {
     msgPnlAccountUpdate: "编辑账号",
     msgPnlAccountDelete: "删除账号",
 
+    msgPnlRoleList: "角色列表",
+    msgPnlRoleCreate: "新增角色",
+    msgPnlRoleUpdate: "编辑角色",
+    msgPnlRoleDelete: "删除角色",
+
 
 
     msgPnlAppList: "应用列表",
@@ -84,5 +89,6 @@ export default {
     msgErrCode_3: "不能操作超级管理员账号",
     msgErrCode_4: "账号已存在",
     msgErrCode_5: "手机号已存在",
+    msgErrCode_6: "角色名已存在",
 
 }

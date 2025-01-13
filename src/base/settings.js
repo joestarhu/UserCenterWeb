@@ -138,11 +138,8 @@ const DMINPUT = {
     // 选择查询(有筛选)
     selectFilter: (qProps, filterFn, i18nLabel = null, value = null) => {
         let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
-        // let params = { outlined: true, clearable: true, style: ConfigDict.dmInputStyle, dense: true, ...qProps }
         return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "selectFilter", filterFn: filterFn })
     },
-
-
 
 }
 

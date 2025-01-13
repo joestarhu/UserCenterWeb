@@ -50,7 +50,7 @@ const menu_list = [
   //     {label:"msgMenuAccount", icon:"person", to:"/account"},
   //     {label:"msgMenuOrg", icon:"corporate_fare",to:"/org"},
   //     {label:"msgMenuRole", icon:"contact_emergency", to:"/role",},
- //     {label:"msgMenuApp", icon:"widgets",to:"/app"},
+  //    {label:"msgMenuApp", icon:"widgets",to:"/app"},
   //   ]},
 ]
 
