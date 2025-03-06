@@ -7,8 +7,8 @@
             </div>
 
             <div class="absolute-top-right q-pa-md q-ma-md">
-                <dmLanguage/>
-                <dmAppearance/>
+                <HiLanguage/>
+                <HiAppearance/>
             </div>
 
             <q-card bordered class="row-inline dm-login-panel">
@@ -49,8 +49,8 @@ import {reactive,computed} from "vue";
 import { ConfigDict,msgNG,msgErrLabel} from "src/base/settings";
 import { encryptString } from "src/base/security";
 import { apiPost } from "src/base/request";
-import dmAppearance from "src/components/dmAppearance.vue";
-import dmLanguage from "src/components/dmLanguage.vue";
+import HiAppearance from "src/components/HiAppearance.vue";
+import HiLanguage from "src/components/HiLanguage.vue";
 
 const {t} = useI18n();
 const router= useRouter();
