@@ -9,7 +9,7 @@ const ModelAccount = {
     account: { i18nLabel: "msgAccount" },
     nickname: { i18nLabel: "msgNickname" },
     phone: { i18nLabel: "msgPhone" },
-    user_status: {
+    account_status: {
         i18nLabel: "msgStatus",
         options: [
             { i18nLabel: "msgStatusEnable", value: 0, color: "positive" },
@@ -41,7 +41,7 @@ const ModelRole = {
             { i18nLabel: "msgStatusEnable", value: 0, color: "positive" },
             { i18nLabel: "msgStatusDisable", value: 1, color: "negative" },
         ]
-    }
+    },
 }
 
 // 应用信息

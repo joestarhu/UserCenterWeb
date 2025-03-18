@@ -16,21 +16,52 @@ const ConfigDict = {
     // 防抖默认时间,毫秒
     debounce: 500,
 
-    // dmInput的Append相关参数
-    dmInputAppendRequired: 0,
-    dmInputAppendQuery: 1,
-    dmInputStyle: { width: "15rem" }
+    //HiInput的相关参数
+    HiInputAppendRequired: 0,
+    HiInputAppendQuery: 1,
+    HiInputStyle: { width: "180px" },
 }
 
 // 控件:按钮定义
-const DMBTN = {
-    create: { id: 0, label: "msgCreate", color: "primary", icon: "add" },
-    update: { id: 1, label: "msgUpdate", color: "primary", icon: "edit" },
-    delete: { id: 2, label: "msgDelete", color: "primary", icon: "delete" },
-    back: { id: 3, label: "msgBack", color: "primary", icon: "arrow_back" },
-    detail: { id: 4, label: "msgDetail", color: "primary", icon: "feed" },
-    submit: { id: 5, label: "msgSubmit", color: "primary", icon: "check" },
+const HiBtnObj = {
+    create: { id: 0, i18nLabel: "msgCreate", color: "primary", icon: "add" },
+    update: { id: 1, i18nLabel: "msgUpdate", color: "primary", icon: "edit" },
+    delete: { id: 2, i18nLabel: "msgDelete", color: "primary", icon: "delete" },
+    back: { id: 3, i18nLabel: "msgBack", color: "primary", icon: "arrow_back" },
+    detail: { id: 4, i18nLabel: "msgDetail", color: "primary", icon: "feed" },
+    submit: { id: 5, i18nLabel: "msgSubmit", color: "primary", icon: "check" },
 }
+
+
+// 控件:输入定义
+const HiInputObj = {
+    // 普通输入
+    text: (qProps, i18nLabel = null, value = null, i18nPlaceholder = null) => {
+        let params = { outlined: true, "lazy-rules": true, hint: "", clearable: true, dense: true, ...qProps }
+        return reactive({ value: value, type: "text", i18nLabel: i18nLabel, i18nPlaceholder: i18nPlaceholder, qProps: params })
+    },
+    // 必需输入
+    textRequired: (qProps, i18nLabel = null, value = null, i18nPlaceholder = null) => {
+        let params = { outlined: true, "lazy-rules": true, hint: "", dense: true, ...qProps }
+        return reactive({ value: value, type: "text", i18nLabel: i18nLabel, i18nPlaceholder: i18nPlaceholder, hiAppend: ConfigDict.HiInputAppendRequired, qProps: params })
+    },
+    // 查询输入
+    textQuery: (qProps, i18nLabel = null, value = null, i18nPlaceholder = null) => {
+        let params = { outlined: true, debounce: ConfigDict.debounce, clearable: true, style: ConfigDict.HiInputStyle, dense: true, ...qProps }
+        return reactive({ value: value, type: "text", i18nLabel: i18nLabel, i18nPlaceholder: i18nPlaceholder, hiAppend: ConfigDict.HiInputAppendQuery, qProps: params })
+    },
+    // 选择输入
+    select: (qProps, i18nLabel = null, value = null) => {
+        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
+        return reactive({ value: value, type: "select", i18nLabel: i18nLabel, qProps: params })
+    },
+    // 选择查询
+    selectQuery: (qProps, i18nLabel = null, value = null) => {
+        let params = { outlined: true, clearable: true, style: ConfigDict.HiInputStyle, dense: true, ...qProps }
+        return reactive({ value: value, type: "select", i18nLabel: i18nLabel, qProps: params })
+    },
+}
+
 
 
 // 控件:dmManager的detail处理函数
@@ -94,16 +125,24 @@ function setTblCol(field, i18nLabel, options = null, name = null, align = "left"
         name = field;
     }
     return { field: field, name: name, i18nLabel: i18nLabel, align: align, format: format }
-
 }
 
 // 控件:表格定义
+const HiTblObj = {
+    col: setTblCol,
+    btn: (filed = "id", i18nLabel = "msgAction", align = "right") => {
+        return setTblCol(filed, i18nLabel, null, "btns", align)
+    },
+}
+
 const DMTBL = {
     col: setTblCol,
     btn: (filed = "id", i18nLabel = "msgAction", align = "right") => {
         return setTblCol(filed, i18nLabel, null, "btns", align)
     },
 }
+
+
 
 // 控件:输入
 const DMINPUT = {
@@ -140,7 +179,6 @@ const DMINPUT = {
         let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
         return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "selectFilter", filterFn: filterFn })
     },
-
 }
 
 // 消息通知相关
@@ -171,7 +209,7 @@ function msgInfo(opts) {
 
 
 export {
-    ConfigDict, DMBTN, DMTBL, DMINPUT,
+    ConfigDict, HiBtnObj, HiInputObj, HiTblObj,
     getOpt, showOptColor, showOptLabel,
     msgOK, msgNG, msgInfo, msgErrLabel,
     detailHandle, detailShow, detailID

@@ -1,24 +1,24 @@
 <template>
 <q-page padding>
-  <dmManager title="msgPnlAccountList" :showDetail="detailPnl.show" @click="btnClick">
+  <HiManager title="msgPnlAccountList" :showDetail="detailPnl.show" @click="btnClick">
     <template #list>
-      <dmTbl v-bind="tbl" @query="getList" @btnClick="btnClick">
-        <template #body-cell-user_status="props">
+      <HiTbl v-bind="tbl" @query="getList" @btnClick="btnClick">
+        <template #body-cell-account_status="props">
           <q-td :props="props">
-            <q-badge :color="showOptColor(props.row.user_status,ModelAccount.user_status.options)">
-              {{ $t(showOptLabel(props.row.user_status,ModelAccount.user_status.options))}}
+            <q-badge :color="showOptColor(props.row.account_status,ModelAccount.account_status.options)">
+              {{ $t(showOptLabel(props.row.account_status,ModelAccount.account_status.options))}}
             </q-badge>
           </q-td>
         </template>
-      </dmTbl>
+      </HiTbl>
     </template>
     <template #detail>
         <AccountDetail :user_uuid="detailPnl.id" @btnClick="btnClick"></AccountDetail>
     </template>
-  </dmManager>
+  </HiManager>
 
   <q-dialog persistent v-model="formPnl.show">
-    <dmForm class="q-pa-md" title="msgPnlAccountCreate" :btnLoading="formPnl.loading" :formData="formData" @submit="btnClick"></dmForm>
+    <HiForm class="q-pa-md" title="msgPnlAccountCreate" :btnLoading="formPnl.loading" :formData="formData" @submit="btnClick"></HiForm>
   </q-dialog>
 
 </q-page>
@@ -29,12 +29,12 @@
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { reactive,computed} from "vue";
-import { DMTBL,DMBTN,DMINPUT, msgOK,msgNG,msgErrLabel,showOptLabel,showOptColor,detailHandle,detailShow,detailID } from "src/base/settings";
+import { HiTblObj,HiBtnObj,HiInputObj, msgOK,msgNG,msgErrLabel,showOptLabel,showOptColor,detailHandle,detailShow,detailID } from "src/base/settings";
 import { apiPost, getTblList} from "src/base/request";
 import { ModelBase,ModelAccount } from "src/base/model";
-import dmForm from "src/components/dmForm.vue";
-import dmTbl from "src/components/dmTbl.vue";
-import dmManager from "src/components/dmManager.vue"
+import HiManager from "src/components/HiManager.vue";
+import HiTbl from "src/components/HiTbl.vue";
+import HiForm from "src/components/HiForm.vue";
 import AccountDetail from "./AccountDetail.vue";
 
 const {t} = useI18n();
@@ -51,39 +51,39 @@ const formPnl = reactive({
 })
 
 const formData = reactive({
-    account:DMINPUT.textRequired({rules: [val => val && val.toString().length > 0 || t("msgRequired")]}, ModelAccount.account.i18nLabel,""),
-    nickname:DMINPUT.textRequired({rules: [val => val && val.toString().length > 0 || t("msgRequired")]},ModelAccount.nickname.i18nLabel,""),
-    phone:DMINPUT.text(null,ModelAccount.phone.i18nLabel,""),
-    user_status:DMINPUT.select({...ModelAccount.user_status},ModelAccount.user_status.i18nLabel,0),  
+    account:HiInputObj.textRequired({rules: [val => val && val.toString().length > 0 || t("msgRequired")]}, ModelAccount.account.i18nLabel,""),
+    nickname:HiInputObj.textRequired({rules: [val => val && val.toString().length > 0 || t("msgRequired")]},ModelAccount.nickname.i18nLabel,""),
+    phone:HiInputObj.text(null,ModelAccount.phone.i18nLabel,""),
+    account_status:HiInputObj.select({...ModelAccount.account_status},ModelAccount.account_status.i18nLabel,0),  
 })
 
 
 const tbl = reactive({
-    dmHeaderInput:{
-        account:DMINPUT.textQuery(null,ModelAccount.account.i18nLabel),
-        nickname:DMINPUT.textQuery(null,ModelAccount.nickname.i18nLabel),
-        user_status:DMINPUT.selectQuery({...ModelAccount.user_status}, ModelAccount.user_status.i18nLabel),
+    headerInputs:{
+      account:HiInputObj.textQuery(null,ModelAccount.account.i18nLabel),
+      nickname:HiInputObj.textQuery(null,ModelAccount.nickname.i18nLabel),
+      account_status:HiInputObj.selectQuery({...ModelAccount.account_status}, ModelAccount.account_status.i18nLabel),
     },
-    dmHeaderBtn:[DMBTN.create],
-    dmRowBtn:[DMBTN.detail],
+    headerBtns:[HiBtnObj.create],
+    rowBtns:[HiBtnObj.detail],
     columns:[
-        DMTBL.col("account",ModelAccount.account.i18nLabel,),
-        DMTBL.col("nickname",ModelAccount.nickname.i18nLabel,),
-        DMTBL.col("phone",ModelAccount.phone.i18nLabel,),
-        DMTBL.col("created_at",ModelBase.created_at.i18nLabel),
-        DMTBL.col("updated_at",ModelBase.updated_at.i18nLabel),
-        DMTBL.col("user_status",ModelAccount.user_status.i18nLabel,),
-        DMTBL.btn("user_uuid"),
+        HiTblObj.col("account",ModelAccount.account.i18nLabel,),
+        HiTblObj.col("nickname",ModelAccount.nickname.i18nLabel,),
+        HiTblObj.col("phone",ModelAccount.phone.i18nLabel,),
+        HiTblObj.col("created_at",ModelBase.created_at.i18nLabel),
+        HiTblObj.col("updated_at",ModelBase.updated_at.i18nLabel),
+        HiTblObj.col("account_status",ModelAccount.account_status.i18nLabel,),
+        HiTblObj.btn("user_uuid"),
     ],
     rows:[],
 })
 
 function getList(pagination){
-  let tblQuery = tbl.dmHeaderInput;
+  let tblQuery = tbl.headerInputs;
   let data = {
     account:tblQuery.account.value,
     nickname:tblQuery.nickname.value,
-    user_status:tblQuery.user_status.value,
+    account_status:tblQuery.account_status.value,
   }
 
   getTblList(
@@ -100,7 +100,7 @@ function initFormData(){
   formData.account.value=""
   formData.nickname.value =""
   formData.phone.value=""
-  formData.user_status.value = 0
+  formData.account_status.value = 0
 }
 
 function createData(formData){
@@ -108,7 +108,7 @@ function createData(formData){
     account:formData.account.value,
     nickname:formData.nickname.value,
     phone:formData.phone.value || "",
-    user_status:formData.user_status.value
+    account_status:formData.account_status.value
   }
 
   apiPost("/account/create",data,
@@ -132,18 +132,18 @@ function createData(formData){
 
 function btnClick(btnID,data=null){
   switch(btnID){
-    case DMBTN.back.id:
+    case HiBtnObj.back.id:
       detailHandle(router);
       getList(tbl.pagination);
       break;
-    case DMBTN.detail.id:
+    case HiBtnObj.detail.id:
       detailHandle(router,data.row.user_uuid)
       break;
-    case DMBTN.create.id:
+    case HiBtnObj.create.id:
       initFormData()
       formPnl.show=true
       break;
-    case DMBTN.submit.id:
+    case HiBtnObj.submit.id:
       createData(data)
       break;
   }

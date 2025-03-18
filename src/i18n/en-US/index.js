@@ -18,15 +18,15 @@ export default {
   msgPermissionDenied: "Permission Denied",
   msgBack: "Back",
   msgDetail: "Detail",
-  msgSubmit: "Submit",
+  msgSubmit: "Apply",
   msgCancel: "Cancel",
   msgAvatar: "Avatar",
   msgSucceed: "Succeed",
   msgUndefined: "Undefined",
   msgResetPassword: "Reset password",
   msgDeleteWarning: "Once you delete data, there is no going back. Please be certain",
-  msgPleaseInput: "Please input ",
-  msgContinueOperation: " to continue the operation",
+  msgPleaseInput: "Please type ",
+  msgContinueOperation: " to continue",
 
 
 

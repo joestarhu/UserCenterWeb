@@ -7,7 +7,6 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: '/account', component: () => import('pages/AccountManager.vue') },
       { path: '/org', component: () => import('pages/OrgManager.vue') },
-      { path: '/role', component: () => import('pages/RoleManager.vue') },
       { path: '/app', component: () => import('pages/AppManager.vue') },
       { path: '/org_user', component: () => import('pages/OrgUserManager.vue') },
       { path: '/org_app', component: () => import('pages/OrgAppManager.vue') },

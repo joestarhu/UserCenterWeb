@@ -11,8 +11,9 @@
                 <HiAppearance/>
             </div>
 
-            <q-card bordered class="row-inline dm-login-panel">
-                <p class="q-pt-md text-h5 text-center text-weight-800">WELCOME</p>
+
+            <q-card bordered class="dm-login-panel">
+                <p class="q-pt-md text-h5 text-center text-weight-800">Welcome</p>
                 <q-form @submit.prevent="login">
                     <q-card-section class="q-pa-md q-ma-md q-gutter-md">
                         <q-input v-bind="passwordLogin.account" v-model.trim="passwordLogin.account.value">
@@ -94,7 +95,7 @@ function login(){
 <style>
 .dm-login-panel{
     border-radius: 0.5rem;
-    width: 25rem;
+    width: 27rem;
 }
 
 .body--light{

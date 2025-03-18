@@ -1,5 +1,5 @@
 <template>
-    <q-expansion-item class="overflow-hidden q-mx-xs q-my-xs hi-menu" active-class="hi-menu-active" :icon="icon"
+    <q-expansion-item class="overflow-hidden q-mx-md q-my-xs hi-menu" active-class="hi-menu-active" :icon="icon"
         :label="$t(i18nlabel)" :to="to" :hide-expand-icon="!children">
         <q-list>
             <q-expansion-item class="overflow-hidden hi-menu" active-class="hi-menu-active" v-for="obj of children"
@@ -14,7 +14,7 @@ const props = defineProps({
     i18nlabel: { type: String, required: true },
     // 图标
     icon: { type: String, default: "widgets" },
-    // 跳转路由链接:未实现
+    // 跳转路由链接
     to: { type: String },
     // 子菜单
     children: { type: Object, default: null },
