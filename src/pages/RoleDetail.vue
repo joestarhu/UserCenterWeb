@@ -4,41 +4,51 @@
     <div class="row items-center">
         <span class="text-bold">{{$t("msgPnlGeneralInfo")}}</span>
         <q-space></q-space>
-        <q-btn no-caps :icon="DMBTN.update.icon" flat dense :color="DMBTN.update.color" @click="btnClick(DMBTN.update.id)">{{$t(DMBTN.update.label)}}</q-btn>
+        <q-btn no-caps :icon="DMBTN.update.icon" unelevated :color="DMBTN.update.color" @click="btnClick(DMBTN.update.id)">{{$t(DMBTN.update.label)}}</q-btn>
     </div>
     <div>
     <q-list>
             <q-item>
-                <q-item-section avatar  class="text-grey">{{$t("msgRoleName")}}</q-item-section>
-                <q-item-section><span>{{detail.role_name || "-"}} </span></q-item-section>
-            </q-item>
-            <q-item>
-                <q-item-section avatar  class="text-grey">{{$t("msgRoleDesc")}}</q-item-section>
-                <q-item-section><span>{{detail.role_desc || "-"}} </span></q-item-section>
-            </q-item>
-            <q-item>
-                <q-item-section avatar  class="text-grey">{{$t("msgStatus")}}</q-item-section>
-                <q-item-section thumbnail>
-                    <q-badge :color="showOptColor(detail.role_status,ModelRole.role_status.options)">
-                        {{ $t(showOptLabel(detail.role_status,ModelRole.role_status.options))}}
-                    </q-badge>
+                <q-item-section>
+                    <q-item-label overline class="text-grey">{{$t(ModelRole.role_name.i18nLabel)}}</q-item-label>
+                    <q-item-label>{{detail.role_name || "-"}}</q-item-label>
                 </q-item-section>
             </q-item>
             <q-item>
-                <q-item-section avatar  class="text-grey">{{$t("msgCreatedAt")}}</q-item-section>
-                <q-item-section>{{detail.created_at|| "-"}}</q-item-section>
+                <q-item-section>
+                    <q-item-label overline class="text-grey">{{$t(ModelRole.role_desc.i18nLabel)}}</q-item-label>
+                    <q-item-label>{{detail.role_desc || "-"}}</q-item-label>
+                </q-item-section>
             </q-item>
             <q-item>
-                <q-item-section avatar  class="text-grey">{{$t("msgUpdatedAt")}}</q-item-section>
-                <q-item-section>{{detail.updated_at|| "-"}}</q-item-section>
+                <q-item-section>
+                    <q-item-label overline class="text-grey">{{$t(ModelRole.role_status.i18nLabel)}}</q-item-label>
+                    <q-item-label>
+                        <q-badge :color="showOptColor(detail.role_status,ModelRole.role_status.options)">
+                        {{ $t(showOptLabel(detail.role_status,ModelRole.role_status.options))}}
+                        </q-badge>
+                    </q-item-label>
+                </q-item-section>
             </q-item>
+            <q-item>
+                    <q-item-section>
+                        <q-item-label overline class="text-grey">{{$t(ModelBase.created_at.i18nLabel)}}</q-item-label>
+                        <q-item-label>{{detail.created_at || "-"}}</q-item-label>
+                    </q-item-section>
+                </q-item>
+                <q-item>
+                    <q-item-section>
+                        <q-item-label overline class="text-grey">{{$t(ModelBase.updated_at.i18nLabel)}}</q-item-label>
+                        <q-item-label>{{detail.updated_at || "-"}}</q-item-label>
+                    </q-item-section>
+                </q-item>
         </q-list>
     </div>
 </q-card-section>
 <q-separator inset></q-separator>
 <q-card-section>
     <div class="row items-center">
-        <span class="text-bold">{{$t("msgPnlDangerZone")}}</span>
+        <span class="text-bold text-negative">{{$t("msgPnlDangerZone")}}</span>
     </div>
     <div>
         <q-list class="relative">
@@ -114,7 +124,7 @@ const formPnl = reactive({
 
 const formData = reactive({
     role_name:  DMINPUT.textRequired({rules: [val => val && val.toString().length > 0 || t("msgRequired")]}, ModelRole.role_name.i18nLabel,""),
-    role_desc:  DMINPUT.text({type:"textarea"}, ModelRole.role_desc.i18nLabel,""),
+    role_desc:  DMINPUT.text({type:"textarea",clearable: false}, ModelRole.role_desc.i18nLabel,""),
     role_status:DMINPUT.select({...ModelRole.role_status},ModelRole.role_status.i18nLabel),
 })
 

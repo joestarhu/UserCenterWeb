@@ -75,6 +75,10 @@ export default {
     msgPnlRoleDelete: "删除角色",
 
 
+    msgPnlOrgList: "组织列表",
+    msgPnlOrgDetail: "组织详情",
+    msgPnlOrgUser: "组织用户",
+    msgPnlOrgApplication: "组织应用",
 
     msgPnlAppList: "应用列表",
     msgPnlAppBasicInfo: "应用信息",

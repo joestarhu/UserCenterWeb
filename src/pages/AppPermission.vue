@@ -1,21 +1,35 @@
 <template>
 <q-card flat>
-    <dmTbl flat :bordered="false" v-bind="tbl" @query="getList"></dmTbl>
+    <HiTbl v-bind="tbl" @query="getList">
+        <template #body-cell-service_name="props">
+          <q-td :props="props" class="items-center">
+            <span>{{ props.row.service_name }}</span>
+            <br/>
+            <span class="text-grey text-caption">{{ props.row.service_identify }}</span>
+          </q-td>
+        </template>
+
+        <!-- <template #body-cell-is_enable="props">
+            <q-td :props="props">
+                <q-toggle flat checked-icon="check" unchecked-icon="clear" color="positive" v-model="props.row.is_enable"/>
+          </q-td>
+        </template> -->
+    </HiTbl>
 </q-card>
+
 
 </template>
 
 
 <script setup lang="js">
-import { useQuasar } from "quasar";
-import { reactive, computed, onMounted} from "vue";
-import { DMTBL,DMBTN,DMINPUT, msgOK,msgNG,showOptLabel,showOptColor } from "src/base/settings";
+import { ref,reactive, computed, onMounted} from "vue";
+import { HiTblObj,HiBtnObj,HiInputObj, msgOK,msgNG,msgErrLabel,showOptLabel,showOptColor,detailHandle,detailShow,detailID } from "src/base/settings";
 import { getTblList,apiGet} from "src/base/request";
-import dmTbl from "src/components/dmTbl.vue";
+import HiTbl from "src/components/HiTbl.vue";
 
 
 const props = defineProps({
-    id:{type:Number, Required:true},
+    app_uuid:{type:String, Required:true},
 })
 
 const roleList = reactive({
@@ -23,23 +37,40 @@ const roleList = reactive({
     data:[]
 })
 
+let visibleColumns = ref(["service_name","is_enable"])
+
 const tbl = reactive({
-    dmHeaderInput:{},
-    dmHeaderBtn:[],
-    dmRowBtn:[],
+    headerInputs:{},
+    headerBtns:[],
+    rowBtns:[],
     columns:[
-        DMTBL.col("role_name","权限标识"),
-        DMTBL.col("role_id","权限名称"),
+        HiTblObj.col("service_name","应用服务"),
+        // DMTBL.col("service_identify","权限标识"),
+        HiTblObj.col("is_enable","Status"),
     ],
     rows:[],
+    pagination:{page:1,rowsNumner:0,rowsPerPage:0},
+    "rows-per-page-options":[0],
+    "hide-pagination":false,
+    dense:true,
+    bordered:false,
+    // visibleColumns:visibleColaumns
 })
 
 function getList(pagination){
     let data = {
-        app_id:props.id
+        app_uuid:props.app_uuid
     }
+
+    apiGet("/app/service",data,
+        (rsp)=>{
+            tbl.rows=rsp.data.data
+        },
+        (err)=>{},
+        null,
+    )
     
-    // getTblList(pagination,tbl,"/app/role_list",data,
+    // getTblList(pagination,tbl,"/app/service",data,
     //     null,
     //     (err)=>{
     //         msgNG({message:err.data.detail})
@@ -69,7 +100,7 @@ function getRoleList(){
 
 
 onMounted(()=>{
-    getRoleList()
+    // getRoleList()
 })
 
 

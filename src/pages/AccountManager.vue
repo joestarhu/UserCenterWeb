@@ -1,5 +1,4 @@
 <template>
-<q-page padding>
   <HiManager title="msgPnlAccountList" :showDetail="detailPnl.show" @click="btnClick">
     <template #list>
       <HiTbl v-bind="tbl" @query="getList" @btnClick="btnClick">
@@ -20,8 +19,6 @@
   <q-dialog persistent v-model="formPnl.show">
     <HiForm class="q-pa-md" title="msgPnlAccountCreate" :btnLoading="formPnl.loading" :formData="formData" @submit="btnClick"></HiForm>
   </q-dialog>
-
-</q-page>
 </template>
 
 

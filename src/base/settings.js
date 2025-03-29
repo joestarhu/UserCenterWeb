@@ -19,7 +19,7 @@ const ConfigDict = {
     //HiInput的相关参数
     HiInputAppendRequired: 0,
     HiInputAppendQuery: 1,
-    HiInputStyle: { width: "180px" },
+    HiInputStyle: { width: "200px" },
 }
 
 // 控件:按钮定义
@@ -60,11 +60,16 @@ const HiInputObj = {
         let params = { outlined: true, clearable: true, style: ConfigDict.HiInputStyle, dense: true, ...qProps }
         return reactive({ value: value, type: "select", i18nLabel: i18nLabel, qProps: params })
     },
+    // 选择查询(有筛选)
+    selectFilter: (qProps, filterFn, i18nLabel = null, value = null) => {
+        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
+        return reactive({ value: value, type: "selectFilter", i18nLabel: i18nLabel, qProps: params, filterFn: filterFn })
+    },
 }
 
 
 
-// 控件:dmManager的detail处理函数
+// 控件:HiManager的detail处理函数
 function detailHandle(router, id = null) {
     const query = { ...router.currentRoute.value.query }
     if (id == null) {
@@ -132,52 +137,6 @@ const HiTblObj = {
     col: setTblCol,
     btn: (filed = "id", i18nLabel = "msgAction", align = "right") => {
         return setTblCol(filed, i18nLabel, null, "btns", align)
-    },
-}
-
-const DMTBL = {
-    col: setTblCol,
-    btn: (filed = "id", i18nLabel = "msgAction", align = "right") => {
-        return setTblCol(filed, i18nLabel, null, "btns", align)
-    },
-}
-
-
-
-// 控件:输入
-const DMINPUT = {
-    // 普通输入
-    text: (qProps, i18nLabel = null, value = null) => {
-        let params = { outlined: true, "lazy-rules": true, hint: "", clearable: true, dense: true, ...qProps }
-        return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "text" })
-    },
-    // 必需输入
-    textRequired: (qProps, i18nLabel = null, value = null) => {
-        let params = { outlined: true, "lazy-rules": true, hint: "", dense: true, ...qProps }
-        return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "text", dmAppend: ConfigDict.dmInputAppendRequired })
-    },
-    // 查询输入
-    textQuery: (qProps, i18nLabel = null, value = null) => {
-        let params = { outlined: true, debounce: ConfigDict.debounce, clearable: true, style: ConfigDict.dmInputStyle, dense: true, ...qProps }
-        return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "text", dmAppend: ConfigDict.dmInputAppendQuery })
-    },
-
-    // 选择输入
-    select: (qProps, i18nLabel = null, value = null) => {
-        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
-        return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "select" })
-    },
-
-    // 选择查询
-    selectQuery: (qProps, i18nLabel = null, value = null) => {
-        let params = { outlined: true, clearable: true, style: ConfigDict.dmInputStyle, dense: true, ...qProps }
-        return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "select" })
-    },
-
-    // 选择查询(有筛选)
-    selectFilter: (qProps, filterFn, i18nLabel = null, value = null) => {
-        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
-        return reactive({ qProps: params, value: value, i18nLabel: i18nLabel, dmType: "selectFilter", filterFn: filterFn })
     },
 }
 

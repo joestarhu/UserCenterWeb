@@ -23,7 +23,7 @@ const props = defineProps({
 
 <style lang="scss">
 .hi-menu {
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
 }
 
 .hi-menu-active {

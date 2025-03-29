@@ -1,6 +1,16 @@
 <template>
-<q-page padding>
-  <dmManager title="msgPnlRoleList" :showDetail="detailPnl.show" @click="btnClick">
+      <dmTbl v-bind="tbl" @query="getList" @btnClick="btnClick">
+        <template #body-cell-role_status="props">
+        <q-td :props="props">
+          <q-badge :color="showOptColor(props.row.role_status,ModelRole.role_status.options)">
+            {{ $t(showOptLabel(props.row.role_status,ModelRole.role_status.options))}}
+          </q-badge>
+        </q-td>
+      </template>
+    </dmTbl>
+
+
+  <!-- <dmManager title="msgPnlRoleList" :showDetail="detailPnl.show" @click="btnClick">
     <template #list>
       <dmTbl v-bind="tbl" @query="getList" @btnClick="btnClick">
         <template #body-cell-role_status="props">
@@ -15,13 +25,11 @@
     <template #detail>
         <RoleDetail :role_id="detailPnl.id" @btnClick="btnClick"></RoleDetail>
     </template>
-  </dmManager>
+  </dmManager> -->
 
-  <q-dialog persistent v-model="formPnl.show">
+  <!-- <q-dialog persistent v-model="formPnl.show">
     <dmForm class="q-pa-md" title="msgPnlRoleCreate" :btnLoading="formPnl.loading" :formData="formData" @submit="btnClick"></dmForm>
-  </q-dialog>
-
-</q-page>
+  </q-dialog> -->
 </template>
 
 <script setup lang="js">
@@ -38,6 +46,11 @@ import RoleDetail from "./RoleDetail.vue";
 
 const {t} = useI18n();
 const router = useRouter();
+
+const emit = defineEmits(["close","btnClick"])
+const props = defineProps({
+    app_id:{type:String,Required:true}
+})
 
 const detailPnl = reactive({
   show:computed(()=>{return detailShow(router)}),
@@ -77,6 +90,7 @@ const tbl = reactive({
 function getList(pagination){
     let tblQuery = tbl.dmHeaderInput;
     let data = {
+        app_id:props.app_id,
         role_name:tblQuery.role_name.value,
         role_status:tblQuery.role_status.value,
     }

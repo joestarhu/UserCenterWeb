@@ -77,6 +77,11 @@ export default {
   msgPnlRoleUpdate: "Edit role",
   msgPnlRoleDelete: "Delete role",
 
+  msgPnlOrgList: "Organization list",
+  msgPnlOrgDetail: "Organization detail",
+  msgPnlOrgUser: "Organization user",
+  msgPnlOrgApplication: "Organization application",
+
 
   msgPnlAppList: "Applications",
   msgPnlAppBasicInfo: "Application info",

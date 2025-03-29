@@ -32,7 +32,9 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <q-page class="q-pa-md" style="flex: 1; overflow: auto;">
+        <router-view />
+      </q-page>
       <!-- <q-ajax-bar color="primary" size="0.3rem" ></q-ajax-bar> -->
     </q-page-container>
   </q-layout>
