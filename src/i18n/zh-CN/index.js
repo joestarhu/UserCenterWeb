@@ -48,7 +48,6 @@ export default {
 
 
     // 菜单
-    msgMenuOrgApp: "组织应用",
     msgMenuPlatformManager: "平台管理",
     msgMenuAccount: "账号",
     msgMenuOrg: "组织",

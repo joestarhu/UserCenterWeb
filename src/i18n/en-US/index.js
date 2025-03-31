@@ -53,7 +53,6 @@ export default {
 
 
   // 菜单
-  msgMenuOrgApp: "Organization application",
   msgMenuPlatformManager: "Platform management",
   msgMenuAccount: "Account",
   msgMenuOrg: "Organization",
