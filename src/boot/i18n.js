@@ -1,15 +1,13 @@
-import { boot } from 'quasar/wrappers'
+import { defineBoot } from '#q-app/wrappers'
 import { createI18n } from 'vue-i18n'
-import { ConfigDict } from "/src/base/settings";
+import { ConfigDict } from 'src/base/settings'
 import messages from 'src/i18n'
 
-
-export default boot(({ app }) => {
-
-  let user_locale = localStorage.getItem(ConfigDict.locale) || "zh-CN";
+export default defineBoot(({ app }) => {
+  let userLocale = localStorage.getItem(ConfigDict.locale) || "zh-CN"
 
   const i18n = createI18n({
-    locale: user_locale,
+    locale: userLocale,
     globalInjection: true,
     messages
   })

@@ -1,28 +1,19 @@
 import { Dark } from "quasar"
-import { boot } from "quasar/wrappers"
+import { defineBoot } from '#q-app/wrappers'
 import { ConfigDict } from "src/base/settings"
 
+export default defineBoot(()=>{
+    const appearance = localStorage.getItem(ConfigDict.appearance) || "auto"
 
-export default boot(({ app }) => {
-    const appearance = localStorage.getItem(
-        ConfigDict.appearance
-    ) || "auto";
-
-    switch (appearance) {
+    switch(appearance){
         case "auto":
+        case "true":
+        case "false":
             Dark.set(appearance);
             break;
-        case "true":
-            Dark.set(true);
-            break;
-        case "false":
-            Dark.set(false);
-            break;
         default:
-            // should not be here
             Dark.set("auto");
             break;
-
     }
 
 })

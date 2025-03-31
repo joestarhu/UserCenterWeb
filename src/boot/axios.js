@@ -1,5 +1,5 @@
-import { boot } from 'quasar/wrappers'
-import { ConfigDict } from 'src/base/settings';
+import { defineBoot } from '#q-app/wrappers'
+import { ConfigDict } from 'src/base/settings'
 import axios from 'axios'
 
 // Be careful when using SSR for cross-request state pollution
@@ -8,23 +8,23 @@ import axios from 'axios'
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({
-  baseURL: "http://127.0.0.1:8000",
-  timeout: 10000,
+const api = axios.create({ 
+  baseURL: 'https://127.0.0.1:8000',
+  timeout:10000
 })
 
 // 请求拦截器
 api.interceptors.request.use(
   config => {
-    config.headers.Authorization = "Bearer " + localStorage.getItem(ConfigDict.jwt);
-    return config;
+    config.headers.Authorization = "Bearer " + localStorage.getItem(ConfigDict.jwt)
+    return config
   },
   error => {
-    return Promise.reject(error)
+      return Promise.reject(error)
   }
 )
 
-export default boot(({ app }) => {
+export default defineBoot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios
